@@ -1,6 +1,8 @@
+library(dplyr)
 ## create a data frame from data/installed-packages.csv
 ## with, e.g., readr::read_csv() or read.csv()
-
+ipt2 <-read_csv("data/installed-packages.csv")
+#ipt2 <- ipt2[,-c(1)]
 ## filter out packages in the default library
 ## keep variables Package and Built
 ## if you use dplyr, code like this will work:
@@ -9,13 +11,13 @@ apt <- ipt %>%
   select(Package, Built)
 
 ## write this new, smaller data frame to data/add-on-packages.csv
-
+write.csv(apt,"data/add-on-packages.csv", row.names = FALSE)
 ## make a frequency table of package by the version in Built
 ## if you use dplyr, code like this will work:
 apt_freqtable <- apt %>%
   count(Built) %>%
   mutate(prop = n / sum(n))
-
+write.csv(apt_freqtable, "data/add-on-packages-freqtable.csv",row.names = FALSE)
 ## write this data frame to data/add-on-packages-freqtable.csv
 ## YES overwrite the files that are there now
 ## they came from me (Jenny)
